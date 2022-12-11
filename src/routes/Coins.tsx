@@ -105,8 +105,5 @@ function Coins() {
 }
 export default Coins;
 
-function asnyc() {
-    throw new Error("Function not implemented.");
-}
 //Link는 페이지 리렌더링을 하지 않는다.
 // a href="" 페이지 렌더링을 해서 여기서는 사용하지 않음
