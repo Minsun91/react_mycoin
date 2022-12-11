@@ -16,3 +16,4 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+//FMCG 업계에서 약 5년의 경력을 가지고 있습니다. 주도적으로 
