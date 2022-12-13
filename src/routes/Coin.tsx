@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import { Route, Routes, Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
+import { useQuery } from "react-query";
+import { fetchCoinInfo, fetchCoinTickers } from "../api";
 
 const Title = styled.h1`
     font-size: 48px;
     color: ${(props) => props.theme.accentColor};
 `;
-
 const Loader = styled.span`
     text-align: center;
     display: block;
@@ -20,7 +21,6 @@ const Container = styled.div`
     max-width: 480px;
     margin: 0 auto;
 `;
-
 const Header = styled.header`
     height: 15vh;
     display: flex;
@@ -28,49 +28,46 @@ const Header = styled.header`
     align-items: center;
 `;
 const Overview = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
 `;
 const OverviewItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  span:first-child {
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span:first-child {
+        font-size: 10px;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
 `;
 const Description = styled.p`
-  margin: 20px 0px;
+    margin: 20px 0px;
 `;
-
 const Tabs = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
-  gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 25px 0px;
+    gap: 10px;
 `;
-
 const Tab = styled.span<{ isActive: boolean }>`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 7px 0px;
-  border-radius: 10px;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
-  a {
-    display: block;
-  }
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 7px 0px;
+    border-radius: 10px;
+    color: ${(props) =>
+        props.isActive ? props.theme.accentColor : props.theme.textColor};
+    a {
+        display: block;
+    }
 `;
-
 interface RouteParams {
     coinId: string;
 }
@@ -147,81 +144,88 @@ interface PriceData {
 }
 
 function Coin() {
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     // const location = useLocation();
     const { coinId } = useParams() as unknown as RouteParams;
     const { state } = useLocation() as LocationState;
 
-    const [info, setInfo] = useState<InfoData>();
-    const [priceInfo, setPriceInfo] = useState<PriceData>();
-const priceMatch = useMatch("/:coinId/price");
-console.log(priceMatch) 
-const chartMatch = useMatch("/:coinId/chart");
-//useMatch는 유저가 특정한 url에 있는지 여부를 알려준다. 
-    useEffect(() => {
-        (async () => {
-            const infoData = await (
-                await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-            ).json();
-            const priceData = await (
-                await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-            ).json();
-            setInfo(infoData);
-            setPriceInfo(priceData);
-            setLoading(false);
-        })();
-    }, [coinId]);
-    return (
+    // const [info, setInfo] = useState<InfoData>();
+    // const [priceInfo, setPriceInfo] = useState<PriceData>();
+    const priceMatch = useMatch("/:coinId/price");
+    const chartMatch = useMatch("/:coinId/chart");
+    //useMatch는 유저가 특정한 url에 있는지 여부를 알려준다.
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const infoData = await (
+    //             await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+    //         ).json();
+    //         const priceData = await (
+    //             await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+    //         ).json();
+    //         setInfo(infoData);
+    //         setPriceInfo(priceData);
+    //         setLoading(false);
+    //     })();
+    // }, [coinId]);
+
+    const {isLoading: infoLoading, data: infoData} = useQuery<InfoData>(["info",coinId], () => fetchCoinInfo(coinId));
+    const {isLoading: tickerLoading, data: tickersData} = useQuery<PriceData>(["tickers",coinId], () => fetchCoinTickers(coinId));
+    //모든 쿼리 키는 유니크한 값을 갖는게 좋다. 
+  //isLoading:infoLoading (이름을 isloading에서 infoLoading으로 바꾼다)
+  
+   const loading = infoLoading || tickerLoading;
+  return (
         <Container>
             <Header>
-                <Title> {state || "Loading..."} </Title>
+                <Title> {state || coinId} </Title>
             </Header>
             {loading ? (
-        <Loader>Loading...</Loader>
-      ) : (
-        <>
-          <Overview>
-            <OverviewItem>
-              <span>Rank:</span>
-              <span>{info?.rank}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Symbol:</span>
-              <span>${info?.symbol}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Open Source:</span>
-              <span>{info?.open_source ? "Yes" : "No"}</span>
-            </OverviewItem>
-          </Overview>
-          <Description>{info?.description}</Description>
-          <Overview>
-            <OverviewItem>
-              <span>Total Suply:</span>
-              <span>{priceInfo?.total_supply}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Max Supply:</span>
-              <span>{priceInfo?.max_supply}</span>
-            </OverviewItem>
-          </Overview>
+                <Loader>Loading...</Loader>
+            ) : (
+                <>
+                    <Overview>
+                        <OverviewItem>
+                            <span>Rank:</span>
+                            <span>{infoData?.rank}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Symbol:</span>
+                            <span>${infoData?.symbol}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Open Source:</span>
+                            <span>{infoData?.open_source ? "Yes" : "No"}</span>
+                        </OverviewItem>
+                    </Overview>
+                    <Description>{infoData?.description}</Description>
+                    <Overview>
+                        <OverviewItem>
+                            <span>Total Suply:</span>
+                            <span>{tickersData?.total_supply}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Max Supply:</span>
+                            <span>{tickersData?.max_supply}</span>
+                        </OverviewItem>
+                    </Overview>
 
-          <Tabs>
-            <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
-              </Tab>
-            <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
-              </Tab>
-          </Tabs>
+                    <Tabs>
+                        <Tab isActive={chartMatch !== null}>
+                            <Link to={`/${coinId}/chart`}><Chart coinId={coinId} />
+                            </Link>
+                        </Tab>
+                        <Tab isActive={priceMatch !== null}>
+                            <Link to={`/${coinId}/price`}><Price /></Link>
+                        </Tab>
+                    </Tabs>
 
-          <Routes>
-          <Route path={`/${coinId}/price`} element={<Price />}/>
-          <Route path={`/${coinId}/chart`} element={<Chart />}/>
-          </Routes>
-
-        </>
-      )}
+                    <Routes>
+                        <Route path={`/${coinId}/price`} element={<Price />} />
+                        <Route path={`/${coinId}/chart`} element={<Chart coinId = {coinId}/>} />
+                    </Routes>
+                </>
+            )}
         </Container>
     );
 }

@@ -3,7 +3,6 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    createBrowserRouter,
 } from "react-router-dom";
 import Coin from "./routes/Coin";
 import Coins from "./routes/Coins";
