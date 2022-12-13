@@ -6,6 +6,8 @@ import Price from "./Price";
 import Chart from "./Chart";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { Helmet } from "react-helmet";
+import { HelmetProvider } from "react-helmet-async";
 
 const Title = styled.h1`
     font-size: 48px;
@@ -169,14 +171,25 @@ function Coin() {
     //     })();
     // }, [coinId]);
 
-    const {isLoading: infoLoading, data: infoData} = useQuery<InfoData>(["info",coinId], () => fetchCoinInfo(coinId));
-    const {isLoading: tickerLoading, data: tickersData} = useQuery<PriceData>(["tickers",coinId], () => fetchCoinTickers(coinId));
-    //모든 쿼리 키는 유니크한 값을 갖는게 좋다. 
-  //isLoading:infoLoading (이름을 isloading에서 infoLoading으로 바꾼다)
-  
-   const loading = infoLoading || tickerLoading;
-  return (
+    const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+        ["info", coinId],
+        () => fetchCoinInfo(coinId)
+    );
+    const { isLoading: tickerLoading, data: tickersData } = useQuery<PriceData>(
+        ["tickers", coinId],
+        () => fetchCoinTickers(coinId)
+    );
+    //모든 쿼리 키는 유니크한 값을 갖는게 좋다.
+    //isLoading:infoLoading (이름을 isloading에서 infoLoading으로 바꾼다)
+
+    const loading = infoLoading || tickerLoading;
+    return (
         <Container>
+            <HelmetProvider>
+                <Helmet>
+                    <title>{state || coinId} </title>
+                </Helmet>
+            </HelmetProvider>
             <Header>
                 <Title> {state || coinId} </Title>
             </Header>
@@ -194,8 +207,11 @@ function Coin() {
                             <span>${infoData?.symbol}</span>
                         </OverviewItem>
                         <OverviewItem>
-                            <span>Open Source:</span>
-                            <span>{infoData?.open_source ? "Yes" : "No"}</span>
+                            <span>Price:</span>
+                            <span>
+                                {tickersData?.quotes.USD.price.toFixed(3)}
+                            </span>
+                            {/* <span>{infoData?.open_source ? "Yes" : "No"}</span> */}
                         </OverviewItem>
                     </Overview>
                     <Description>{infoData?.description}</Description>
@@ -212,17 +228,23 @@ function Coin() {
 
                     <Tabs>
                         <Tab isActive={chartMatch !== null}>
-                            <Link to={`/${coinId}/chart`}><Chart coinId={coinId} />
+                            <Link to={`/${coinId}/chart`}>
+                                <Chart coinId={coinId} />
                             </Link>
                         </Tab>
                         <Tab isActive={priceMatch !== null}>
-                            <Link to={`/${coinId}/price`}><Price /></Link>
+                            <Link to={`/${coinId}/price`}>
+                                <Price />
+                            </Link>
                         </Tab>
                     </Tabs>
 
                     <Routes>
                         <Route path={`/${coinId}/price`} element={<Price />} />
-                        <Route path={`/${coinId}/chart`} element={<Chart coinId = {coinId}/>} />
+                        <Route
+                            path={`/${coinId}/chart`}
+                            element={<Chart coinId={coinId} />}
+                        />
                     </Routes>
                 </>
             )}

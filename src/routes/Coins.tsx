@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import { useEffect, useState } from "react";
 import React from "react";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
+import {Helmet} from "react-helmet";
+import { HelmetProvider } from "react-helmet-async";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -57,6 +59,7 @@ interface ICoin {
     is_active: boolean;
     type: string;
 }
+
 function Coins() {
     // const [coins, setCoins] = useState<CoinInterface[]>([]);
     // const [loading, setLoading] = useState(true);
@@ -77,6 +80,8 @@ function Coins() {
     return (
         <Container>
             <Header>
+                <HelmetProvider>
+            <Helmet><title> Coins </title></Helmet></HelmetProvider>
                 <Title> Coins </Title>
             </Header>
             {isLoading ? (
