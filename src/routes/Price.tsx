@@ -29,14 +29,18 @@ function Price({ coinId }: PriceProps) {
                 <ApexChart
                     type="candlestick"
                     series={[
-                        {
-                            data: [{
-                                x: data?.map((price) => parseFloat(price.close)) ??
-                                [],
-                                y: data?.map((price) => parseFloat(price.close)) ??
-                                []
-                              }]
-                        }
+                        // {  
+                        //     data: 
+                        //     data?.map((price)=> {
+                        //         return [
+                        //             price.time_close,
+                        //             parseFloat(price.open),
+                        //             parseFloat(price.close),
+                        //             parseFloat(price.high),
+                        //             parseFloat(price.low),
+                        //         ];
+                        //     }),
+                        // }
                     ]}
                     options={{
                         theme: {

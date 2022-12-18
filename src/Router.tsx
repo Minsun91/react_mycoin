@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Coin from "./routes/Coin";
 import Coins from "./routes/Coins";
+import env from "dotenv";
 
 // const Router = createBrowserRouter([
 //     {
@@ -37,9 +38,12 @@ function Router() {
         <Route path={`${process.env.PUBLIC_URL}/:coinId`}  element={<Coin />}/>
         <Route path={`${process.env.PUBLIC_URL}/`} element={<Coins />}/>
         <Route path={`${process.env.PUBLIC_URL}/:coinId/chart`} element={<Coin />}/>
-        {/* <Route path="/:coinId/price" element={<Coin />}/> */}
         <Route path={`${process.env.PUBLIC_URL}/:coinId/price`} element={<Coin />}/>
-
+        
+        {/* <Route path="/" element={<Coins />}/>
+        <Route path="/:coinId" element={<Coin />}/>
+        <Route path="/:coinId/chart" element={<Coin />}/>
+        <Route path="/:coinId/price" element={<Coin />}/> */}
         </Routes>
     </BrowserRouter>
   );
