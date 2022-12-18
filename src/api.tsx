@@ -4,6 +4,9 @@
 //     );
 //     const json = await response.json();
 //     return json;
+
+import { isRouteErrorResponse } from "react-router-dom";
+
 // }
 const BASE_URL = `https://api.coinpaprika.com/v1`;
 
@@ -23,4 +26,9 @@ export function fetchCoinHistory (coinId:string){
     const endDate = Math.floor(Date.now()/1000);
     const startDate = endDate - 60 * 60 * 23 * 7 * 1; //a week ago
     return fetch(`https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`).then((response) => response.json());
+}
+
+export function fetchPriceHistory (coinId:string) {
+     
+    return fetch(`https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`).then((response)=>response.json());
 }

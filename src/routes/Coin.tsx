@@ -4,6 +4,7 @@ import { Route, Routes, Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
+import Coins from "./Coins";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
@@ -17,7 +18,6 @@ const Loader = styled.span`
     text-align: center;
     display: block;
 `;
-
 const Container = styled.div`
     padding: 0px 20px;
     max-width: 480px;
@@ -183,6 +183,7 @@ function Coin() {
     //isLoading:infoLoading (이름을 isloading에서 infoLoading으로 바꾼다)
 
     const loading = infoLoading || tickerLoading;
+
     return (
         <Container>
             <HelmetProvider>
@@ -229,18 +230,25 @@ function Coin() {
                     <Tabs>
                         <Tab isActive={chartMatch !== null}>
                             <Link to={`/${coinId}/chart`}>
-                                <Chart coinId={coinId} />
+                            CHART <Chart coinId={coinId} /> 
                             </Link>
                         </Tab>
+
                         <Tab isActive={priceMatch !== null}>
                             <Link to={`/${coinId}/price`}>
-                                <Price />
+                             PRICe <Price coinId={coinId} />
+                            </Link>
+                        </Tab>
+
+                        <Tab isActive={priceMatch !== null || chartMatch !== null} >
+                        <Link to={"/"}>
+                                HOME 
                             </Link>
                         </Tab>
                     </Tabs>
 
                     <Routes>
-                        <Route path={`/${coinId}/price`} element={<Price />} />
+                        <Route path={`/${coinId}/price`} element={<Price coinId={coinId} />} />
                         <Route
                             path={`/${coinId}/chart`}
                             element={<Chart coinId={coinId} />}

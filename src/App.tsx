@@ -1,7 +1,14 @@
-import React from "react";
-import { createGlobalStyle } from "styled-components";
+// 컴포넌트 정의하는 프로그램으로 실제로 화면에 표시되는 내용은 여기서 정의된다.
+
+import React, { useState } from "react";
+import styled, {
+    createGlobalStyle,
+    css,
+    ThemeProvider,
+} from "styled-components";
 import Router from "./Router";
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from "react-query/devtools";
+import { darktheme, lighttheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -53,7 +60,7 @@ table {
   border-spacing: 0;
 }
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
@@ -66,12 +73,38 @@ a {
 }
 `;
 
+const ThemeSwitchBtn = styled.button`
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    border-radius: 10px;
+    border: 3px;
+    align-items: center;
+    &:hover {
+        color: ${(props) => props.theme.accentColor};
+    }
+`;
+
 function App() {
+    const [theme, setTheme] = useState(lighttheme);
+
+    const switchTheme = () => {
+        const currentTheme = theme === lighttheme ? darktheme : lighttheme;
+        setTheme(currentTheme);
+    };
+
     return (
         <>
-            <GlobalStyle />
-            <Router />
-            < ReactQueryDevtools initialIsOpen={true} />
+            <ThemeProvider theme={theme}>
+                <GlobalStyle />
+                <ThemeSwitchBtn
+                    onClick={() => {
+                        switchTheme();
+                    }}>
+                    Change Theme
+                </ThemeSwitchBtn>
+                <Router />
+                <ReactQueryDevtools initialIsOpen={true} />
+            </ThemeProvider>
         </>
     );
 }

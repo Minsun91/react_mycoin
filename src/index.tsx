@@ -1,9 +1,11 @@
+//html 템플렛 및 js 컴포넌트를 조합하여 렌더링하고 실제로 표시한다. 
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
-import { theme } from "./theme";
+import { darktheme, lighttheme } from "./theme";
 
 // const rootElement = document.getElementById('root');
 // if (!rootElement) throw new Error('Failed to find the root element');
@@ -14,11 +16,10 @@ const queryClient = new QueryClient();
 ReactDOM.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
+            {/* <ThemeProvider theme={lighttheme}> */}
                 <App />
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
         </QueryClientProvider>
     </React.StrictMode>,
     document.getElementById("root")
 );
-//FMCG 업계에서 약 5년의 경력을 가지고 있습니다. 주도적으로

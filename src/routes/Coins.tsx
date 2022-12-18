@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { useEffect, useState } from "react";
 import React from "react";
 import { useQuery } from "react-query";
@@ -21,7 +21,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 const Coin = styled.li`
     background-color: white;
-    color: ${(props) => props.theme.bgColor};
+    color: #2f3640;
     border-radius: 15px;
     margin-bottom: 10px;
     a {

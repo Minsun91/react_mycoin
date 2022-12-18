@@ -33,7 +33,7 @@ import Coins from "./routes/Coins";
 function Router() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes> // 하나의 라우터를 렌더링 할 수 있다. 
         <Route path="/:coinId"  element={<Coin />}/>
         <Route path="/" element={<Coins />}/>
         <Route path="/:coinId/chart" element={<Coin />}/>
