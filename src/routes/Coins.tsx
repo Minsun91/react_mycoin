@@ -21,7 +21,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 const Coin = styled.li`
     background-color: white;
-    color: #2f3640;
+    color: ${(props)=> props.theme.textColor};
     border-radius: 15px;
     margin-bottom: 10px;
     a {
@@ -60,6 +60,10 @@ interface ICoin {
     type: string;
 }
 
+interface ICoinsProp {
+
+}
+
 function Coins() {
     // const [coins, setCoins] = useState<CoinInterface[]>([]);
     // const [loading, setLoading] = useState(true);
@@ -82,7 +86,15 @@ function Coins() {
             <Header>
                 <HelmetProvider>
             <Helmet><title> Coins </title></Helmet></HelmetProvider>
-                <Title> Coins </Title>
+                <Title> Coins </Title> 
+
+                {/* <ThemeSwitchBtn
+                    onClick={() => {
+                        switchTheme();
+                    }}>
+                    Change Theme
+                </ThemeSwitchBtn> */}
+
             </Header>
             {isLoading ? (
                 <Loader> Loading... </Loader>

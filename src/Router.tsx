@@ -30,20 +30,22 @@ import env from "dotenv";
 // ]);
 
 // export default Router;
+interface IRouterProps {
+}
 
-function Router() {
+function Router({}:IRouterProps) {
   return (
     <BrowserRouter>
       <Routes> // 하나의 라우터를 렌더링 할 수 있다. 
-        <Route path={`${process.env.PUBLIC_URL}/:coinId`}  element={<Coin />}/>
+        {/* <Route path={`${process.env.PUBLIC_URL}/:coinId`}  element={<Coin />}/>
         <Route path={`${process.env.PUBLIC_URL}/`} element={<Coins />}/>
         <Route path={`${process.env.PUBLIC_URL}/:coinId/chart`} element={<Coin />}/>
-        <Route path={`${process.env.PUBLIC_URL}/:coinId/price`} element={<Coin />}/>
+        <Route path={`${process.env.PUBLIC_URL}/:coinId/price`} element={<Coin />}/> */}
         
-        {/* <Route path="/" element={<Coins />}/>
+        <Route path="/" element={<Coins />}/>
         <Route path="/:coinId" element={<Coin />}/>
         <Route path="/:coinId/chart" element={<Coin />}/>
-        <Route path="/:coinId/price" element={<Coin />}/> */}
+        <Route path="/:coinId/price" element={<Coin />}/>
         </Routes>
     </BrowserRouter>
   );

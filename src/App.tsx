@@ -9,6 +9,8 @@ import styled, {
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { darktheme, lighttheme } from "./theme";
+import {useRecoilValue} from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -85,23 +87,12 @@ const ThemeSwitchBtn = styled.button`
 `;
 
 function App() {
-    const [theme, setTheme] = useState(lighttheme);
-
-    const switchTheme = () => {
-        const currentTheme = theme === lighttheme ? darktheme : lighttheme;
-        setTheme(currentTheme);
-    };
-
+const isDark = useRecoilValue(isDarkAtom)
     return (
         <>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={isDark ? darktheme: lighttheme}>
                 <GlobalStyle />
-                <ThemeSwitchBtn
-                    onClick={() => {
-                        switchTheme();
-                    }}>
-                    Change Theme
-                </ThemeSwitchBtn>
+                
                 <Router />
                 <ReactQueryDevtools initialIsOpen={true} />
             </ThemeProvider>
