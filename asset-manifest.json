@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "https://minsun91.github.io/react_mycoin/static/js/main.8f00e2da.chunk.js",
-    "main.js.map": "https://minsun91.github.io/react_mycoin/static/js/main.8f00e2da.chunk.js.map",
+    "main.js": "https://minsun91.github.io/react_mycoin/static/js/main.44c3bd63.chunk.js",
+    "main.js.map": "https://minsun91.github.io/react_mycoin/static/js/main.44c3bd63.chunk.js.map",
     "runtime-main.js": "https://minsun91.github.io/react_mycoin/static/js/runtime-main.ceb23814.js",
     "runtime-main.js.map": "https://minsun91.github.io/react_mycoin/static/js/runtime-main.ceb23814.js.map",
-    "static/js/2.e42828d6.chunk.js": "https://minsun91.github.io/react_mycoin/static/js/2.e42828d6.chunk.js",
-    "static/js/2.e42828d6.chunk.js.map": "https://minsun91.github.io/react_mycoin/static/js/2.e42828d6.chunk.js.map",
+    "static/js/2.95da4079.chunk.js": "https://minsun91.github.io/react_mycoin/static/js/2.95da4079.chunk.js",
+    "static/js/2.95da4079.chunk.js.map": "https://minsun91.github.io/react_mycoin/static/js/2.95da4079.chunk.js.map",
     "index.html": "https://minsun91.github.io/react_mycoin/index.html",
-    "static/js/2.e42828d6.chunk.js.LICENSE.txt": "https://minsun91.github.io/react_mycoin/static/js/2.e42828d6.chunk.js.LICENSE.txt"
+    "static/js/2.95da4079.chunk.js.LICENSE.txt": "https://minsun91.github.io/react_mycoin/static/js/2.95da4079.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ceb23814.js",
-    "static/js/2.e42828d6.chunk.js",
-    "static/js/main.8f00e2da.chunk.js"
+    "static/js/2.95da4079.chunk.js",
+    "static/js/main.44c3bd63.chunk.js"
   ]
 }
