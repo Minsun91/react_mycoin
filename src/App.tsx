@@ -1,9 +1,8 @@
 // 컴포넌트 정의하는 프로그램으로 실제로 화면에 표시되는 내용은 여기서 정의된다.
 
-import React, { useState } from "react";
+import React from "react";
 import styled, {
     createGlobalStyle,
-    css,
     ThemeProvider,
 } from "styled-components";
 import Router from "./Router";
@@ -75,16 +74,16 @@ a {
 }
 `;
 
-const ThemeSwitchBtn = styled.button`
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    border-radius: 10px;
-    border: 3px;
-    align-items: center;
-    &:hover {
-        color: ${(props) => props.theme.accentColor};
-    }
-`;
+// const ThemeSwitchBtn = styled.button`
+//     grid-template-columns: repeat(2, 1fr);
+//     gap: 10px;
+//     border-radius: 10px;
+//     border: 3px;
+//     align-items: center;
+//     &:hover {
+//         color: ${(props) => props.theme.accentColor};
+//     }
+// `;
 
 function App() {
 const isDark = useRecoilValue(isDarkAtom)
@@ -92,7 +91,6 @@ const isDark = useRecoilValue(isDarkAtom)
         <>
             <ThemeProvider theme={isDark ? darktheme: lighttheme}>
                 <GlobalStyle />
-                
                 <Router />
                 <ReactQueryDevtools initialIsOpen={true} />
             </ThemeProvider>

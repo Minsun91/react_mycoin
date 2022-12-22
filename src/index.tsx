@@ -5,7 +5,6 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
-import { darktheme, lighttheme } from "./theme";
 import {RecoilRoot} from "recoil";
 
 // const rootElement = document.getElementById('root');

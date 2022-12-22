@@ -110,7 +110,6 @@ interface InfoData {
     first_data_at: string;
     last_data_at: string;
 }
-
 interface PriceData {
     id: string;
     name: string;
